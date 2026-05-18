@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Bedelle — A Boutique Hideaway in Runda, Nairobi</title>
+<meta name="description" content="A seven-suite boutique hotel tucked into the leafy quiet of Runda. Manicured gardens, a sunlit pool, and a kitchen people fly back for." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,200..900,0..100;1,9..144,200..900,0..100&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ───────────── Tokens ───────────── */
+  :root{
+    --cream:        #f1e8d4;
+    --cream-deep:   #e8dcc0;
+    --bone:         #f6efde;
+    --indian:       #4f7c7a;
+    --indian-deep:  #3a6664;
+    --coral:        #c97a5a;
+    --saffron:      #d4a44a;
+    --clove:        #6a4530;
+    --dhow:         #8a9fa5;
+    --charcoal:     #2a2520;
+    --ink:          #1a1612;
+    --ink-soft:     #4a4238;
+    --rule:         rgba(26,22,18,.18);
+    --rule-faint:   rgba(26,22,18,.10);
+
+    --serif:  "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+    --sans:   "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+
+    --ease:   cubic-bezier(.22,.61,.36,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--bone);
+    line-height:1.55;
+    font-weight:400;
+    overflow-x:hidden;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+  ::selection{ background:var(--ink); color:var(--cream); }
+
+  body::after{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:200;
+    opacity:.06;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .display{
+    font-family:var(--serif);
+    font-weight:330;
+    font-style:normal;
+    letter-spacing:-.025em;
+    line-height:.95;
+    font-variation-settings:"opsz" 144, "SOFT" 30;
+  }
+  .display em{
+    font-style:italic;
+    font-weight:300;
+    font-variation-settings:"opsz" 144, "SOFT" 60;
+  }
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:.7rem;
+    font-weight:500;
+    letter-spacing:.32em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .lede{
+    font-family:var(--serif);
+    font-weight:330;
+    font-size:clamp(1.2rem, 1.7vw, 1.55rem);
+    line-height:1.45;
+    letter-spacing:-.01em;
+    font-variation-settings:"opsz" 36;
+  }
+
+  /* Nav */
+  .nav{
+    position:fixed; top:0; left:0; right:0;
+    z-index:100;
+    padding:1.5rem clamp(1.5rem, 4vw, 3rem);
+    display:flex; align-items:center; justify-content:space-between;
+    transition:background .5s var(--ease), backdrop-filter .5s var(--ease), padding .4s var(--ease);
+  }
+  .nav.scrolled{
+    background:rgba(246,239,222,.78);
+    backdrop-filter: blur(14px) saturate(1.05);
+    -webkit-backdrop-filter: blur(14px) saturate(1.05);
+    padding-top:1rem; padding-bottom:1rem;
+    border-bottom:1px solid var(--rule-faint);
+  }
+  .brand{
+    font-family:var(--serif);
+    font-size:1.05rem;
+    font-weight:400;
+    letter-spacing:.05em;
+    font-variation-settings:"opsz" 24;
+  }
+  .brand .dot{ color:var(--coral); }
+  .nav-links{
+    display:flex; gap:2.5rem;
+    font-size:.78rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-weight:400;
+  }
+  .nav-links a{ position:relative; padding:.25rem 0; }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-2px;
+    height:1px; background:var(--ink); transform:scaleX(0); transform-origin:left;
+    transition:transform .5s var(--ease);
+  }
+  .nav-links a:hover::after{ transform:scaleX(1); }
+  .nav-cta{
+    font-size:.76rem; letter-spacing:.22em; text-transform:uppercase;
+    border:1px solid var(--ink); padding:.65rem 1.2rem; border-radius:999px;
+    transition:background .35s var(--ease), color .35s var(--ease);
+  }
+  .nav-cta:hover{ background:var(--ink); color:var(--cream); }
+  @media (max-width: 860px){ .nav-links{ display:none; } }
+
+  /* Hero */
+  .hero{
+    min-height:100vh;
+    background:var(--cream);
+    position:relative;
+    padding:8rem clamp(1.5rem,4vw,3rem) 4rem;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap:clamp(2rem, 5vw, 5rem);
+    align-items:end;
+    width:100%;
+    max-width:1500px;
+    margin:0 auto;
+    flex:1;
+  }
+  @media (max-width: 900px){
+    .hero-grid{ grid-template-columns:1fr; gap:3rem; align-items:start; }
+  }
+  .hero-left{ padding-bottom:2rem; }
+  .hero-meta{
+    display:flex; align-items:center; gap:1rem;
+    margin-bottom:3rem;
+  }
+  .hero-meta .line{ height:1px; width:2.5rem; background:var(--ink); opacity:.4; }
+  .hero h1{
+    font-size:clamp(3.4rem, 9vw, 9rem);
+    margin-bottom:2.5rem;
+  }
+  .hero h1 .row{ display:block; overflow:hidden; }
+  .hero h1 .row span{
+    display:inline-block;
+    animation: rise 1.2s var(--ease) forwards;
+    transform:translateY(110%);
+    opacity:0;
+  }
+  .hero h1 .row:nth-child(1) span{ animation-delay:.15s; }
+  .hero h1 .row:nth-child(2) span{ animation-delay:.30s; }
+  .hero h1 .row:nth-child(3) span{ animation-delay:.45s; }
+  @keyframes rise{ to{ transform:translateY(0); opacity:1; } }
+
+  .hero-cta-row{
+    display:flex; align-items:center; gap:2rem; flex-wrap:wrap;
+    opacity:0; animation: fade .9s var(--ease) .9s forwards;
+  }
+  @keyframes fade{ to{ opacity:1; } }
+  .btn{
+    display:inline-flex; align-items:center; gap:.85rem;
+    padding:1.1rem 1.8rem;
+    background:var(--ink); color:var(--cream);
+    border-radius:999px;
+    font-size:.8rem; letter-spacing:.22em; text-transform:uppercase;
+    transition:transform .4s var(--ease), background .4s var(--ease);
+  }
+  .btn:hover{ background:var(--coral); transform:translateY(-2px); }
+  .btn svg{ transition:transform .4s var(--ease); }
+  .btn:hover svg{ transform:translateX(4px); }
+  .btn-ghost{
+    font-size:.76rem; letter-spacing:.22em; text-transform:uppercase;
+    border-bottom:1px solid var(--ink); padding-bottom:.35rem;
+    transition:color .3s var(--ease), border-color .3s var(--ease);
+  }
+  .btn-ghost:hover{ color:var(--coral); border-color:var(--coral); }
+
+  .hero-image{
+    position:relative;
+    aspect-ratio: 4 / 5;
+    width:100%;
+    max-width:520px;
+    margin-left:auto;
+    overflow:hidden;
+    border-radius:2px;
+    box-shadow: 0 30px 60px -30px rgba(26,22,18,.35);
+    opacity:0; animation: fade 1.4s var(--ease) .4s forwards;
+  }
+  .hero-image svg{ width:100%; height:100%; }
+  .hero-image .caption{
+    position:absolute; left:1.25rem; bottom:1.25rem; right:1.25rem;
+    color:rgba(246,239,222,.9);
+    font-family:var(--serif);
+    font-size:.85rem;
+    font-style:italic;
+    font-variation-settings:"opsz" 18;
+    display:flex; justify-content:space-between; align-items:end;
+  }
+  .hero-image .caption .num{
+    font-family:var(--sans); font-style:normal;
+    font-size:.7rem; letter-spacing:.3em; text-transform:uppercase;
+  }
+
+  .hero-rail{
+    display:flex; justify-content:space-between; align-items:end;
+    margin-top:4rem; padding-top:1.5rem;
+    border-top:1px solid var(--rule);
+    font-size:.7rem; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--ink-soft);
+    opacity:0; animation: fade .9s var(--ease) 1.2s forwards;
+    width:100%; max-width:1500px; margin-left:auto; margin-right:auto;
+  }
+  .hero-rail .scroll{ display:flex; align-items:center; gap:.75rem; }
+  .hero-rail .scroll .arrow{
+    width:1px; height:30px; background:var(--ink); opacity:.5;
+    animation: drop 2.4s var(--ease) infinite;
+    transform-origin:top;
+  }
+  @keyframes drop{
+    0%   { transform:scaleY(0); transform-origin:top; }
+    50%  { transform:scaleY(1); transform-origin:top; }
+    50.01%{ transform-origin:bottom; }
+    100% { transform:scaleY(0); transform-origin:bottom; }
+  }
+
+  /* Philosophy */
+  .philosophy{
+    background:var(--bone);
+    padding: clamp(7rem, 14vh, 11rem) clamp(1.5rem,4vw,3rem);
+  }
+  .philosophy-inner{
+    max-width:1300px; margin:0 auto;
+    display:grid; grid-template-columns: 1fr 2fr;
+    gap:clamp(3rem, 8vw, 8rem);
+    align-items:start;
+  }
+  @media (max-width:860px){
+    .philosophy-inner{ grid-template-columns:1fr; gap:2.5rem; }
+  }
+  .section-label{
+    display:flex; align-items:baseline; gap:1rem;
+    font-size:.7rem; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .section-label .num{
+    font-family:var(--serif); font-style:italic;
+    font-size:1.1rem; letter-spacing:0;
+    color:var(--ink);
+    font-variation-settings:"opsz" 18;
+  }
+  .philosophy h2{
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    margin-bottom:2.5rem;
+    max-width:18ch;
+  }
+  .philosophy p + p{ margin-top:1.5rem; }
+  .philosophy .signature{
+    margin-top:3rem;
+    display:flex; align-items:center; gap:1rem;
+    font-family:var(--serif); font-style:italic;
+    color:var(--ink-soft); font-size:.95rem;
+    font-variation-settings:"opsz" 18;
+  }
+  .philosophy .signature::before{
+    content:""; width:2rem; height:1px; background:var(--ink-soft);
+  }
+
+  /* Rooms */
+  .rooms{
+    background:var(--charcoal);
+    color:var(--cream);
+    padding: clamp(7rem, 14vh, 11rem) clamp(1.5rem,4vw,3rem);
+  }
+  .rooms .section-label{ color:rgba(246,239,222,.6); }
+  .rooms .section-label .num{ color:var(--cream); }
+  .rooms-head{
+    max-width:1300px; margin:0 auto 5rem;
+    display:flex; align-items:end; justify-content:space-between; gap:2rem;
+    flex-wrap:wrap;
+  }
+  .rooms-head h2{
+    font-size: clamp(2rem, 4.5vw, 3.6rem);
+    max-width:22ch;
+    color:var(--cream);
+  }
+  .rooms-head .lede{ color:rgba(246,239,222,.7); max-width:34ch; }
+
+  .rooms-grid{
+    max-width:1300px; margin:0 auto;
+    display:grid; grid-template-columns: repeat(3, 1fr);
+    gap:clamp(1.5rem, 2.5vw, 2.5rem);
+  }
+  @media (max-width: 900px){ .rooms-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 600px){ .rooms-grid{ grid-template-columns: 1fr; } }
+
+  .room-card{ position:relative; display:block; overflow:hidden; }
+  .room-card .frame{
+    aspect-ratio: 4/5;
+    overflow:hidden;
+    position:relative;
+  }
+  .room-card .frame svg{
+    width:100%; height:100%;
+    transition: transform 1.4s var(--ease);
+  }
+  .room-card:hover .frame svg{ transform:scale(1.04); }
+  .room-card .frame::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 60%, rgba(0,0,0,.45) 100%);
+    opacity:0; transition:opacity .5s var(--ease);
+  }
+  .room-card:hover .frame::after{ opacity:1; }
+
+  .room-meta{
+    margin-top:1.25rem;
+    display:flex; justify-content:space-between; align-items:baseline; gap:1rem;
+  }
+  .room-title{
+    font-family:var(--serif);
+    font-size:1.4rem; font-weight:330;
+    letter-spacing:-.01em;
+    font-variation-settings:"opsz" 36;
+  }
+  .room-title em{ font-style:italic; font-weight:300; }
+  .room-tag{
+    font-size:.7rem; letter-spacing:.28em; text-transform:uppercase;
+    color:rgba(246,239,222,.55);
+  }
+  .room-cap{
+    margin-top:.4rem;
+    font-size:.85rem; color:rgba(246,239,222,.6);
+    font-style:italic; font-family:var(--serif);
+    font-variation-settings:"opsz" 18;
+  }
+
+  /* Process */
+  .process{
+    background:var(--cream);
+    padding: clamp(7rem, 14vh, 11rem) clamp(1.5rem,4vw,3rem);
+  }
+  .process-head{ max-width:1300px; margin:0 auto 6rem; }
+  .process-head h2{
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    margin-top:2rem;
+    max-width:16ch;
+  }
+  .process-grid{
+    max-width:1300px; margin:0 auto;
+    display:grid; grid-template-columns: repeat(4, 1fr);
+    gap: clamp(2rem, 3.5vw, 4rem);
+    position:relative;
+  }
+  .process-grid::before{
+    content:""; position:absolute;
+    top:1.4rem; left:0; right:0; height:1px;
+    background:var(--rule);
+  }
+  @media (max-width:900px){
+    .process-grid{ grid-template-columns: repeat(2,1fr); row-gap:3.5rem; }
+  }
+  @media (max-width:520px){
+    .process-grid{ grid-template-columns: 1fr; }
+    .process-grid::before{ display:none; }
+  }
+  .step{ position:relative; padding-top:2.8rem; }
+  .step .dot{
+    position:absolute; top:1rem; left:0;
+    width:.8rem; height:.8rem; border-radius:50%;
+    background:var(--bone);
+    border:1px solid var(--ink);
+  }
+  .step:nth-child(1) .dot{ background:var(--saffron); border-color:var(--saffron); }
+  .step:nth-child(2) .dot{ background:var(--indian); border-color:var(--indian); }
+  .step:nth-child(3) .dot{ background:var(--coral); border-color:var(--coral); }
+  .step:nth-child(4) .dot{ background:var(--clove); border-color:var(--clove); }
+
+  .step .num{
+    font-family:var(--serif); font-style:italic;
+    font-size:.95rem;
+    font-variation-settings:"opsz" 18;
+    color:var(--ink-soft);
+    margin-bottom:1rem;
+  }
+  .step h3{
+    font-family:var(--serif);
+    font-weight:330;
+    font-size:1.7rem;
+    letter-spacing:-.015em;
+    line-height:1.1;
+    margin-bottom:1rem;
+    font-variation-settings:"opsz" 36, "SOFT" 40;
+  }
+  .step p{
+    font-size:.95rem; color:var(--ink-soft);
+    line-height:1.55;
+  }
+
+  /* Voices */
+  .voices{
+    background:var(--cream-deep);
+    padding: clamp(7rem, 14vh, 11rem) clamp(1.5rem,4vw,3rem);
+  }
+  .voices-inner{ max-width:1100px; margin:0 auto; }
+  .voices-head{ text-align:center; margin-bottom:6rem; }
+  .voices-head .section-label{ justify-content:center; }
+  .voices-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:5rem;
+  }
+  @media (max-width:780px){ .voices-grid{ grid-template-columns:1fr; gap:3.5rem; } }
+
+  .quote{ position:relative; }
+  .quote .mark{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:5rem;
+    line-height:1;
+    color:var(--coral);
+    margin-bottom:1rem;
+    font-variation-settings:"opsz" 144;
+  }
+  .quote blockquote{
+    font-family:var(--serif);
+    font-weight:330;
+    font-size:clamp(1.15rem, 1.6vw, 1.45rem);
+    line-height:1.5;
+    letter-spacing:-.005em;
+    color:var(--ink);
+    font-variation-settings:"opsz" 36;
+  }
+  .quote blockquote em{ font-style:italic; font-weight:300; }
+  .quote .by{
+    margin-top:2rem;
+    display:flex; align-items:center; gap:1rem;
+    font-size:.74rem; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .quote .by .line{ width:2rem; height:1px; background:var(--ink-soft); }
+  .quote .by strong{ font-weight:500; color:var(--ink); letter-spacing:.22em; }
+
+  /* Banner */
+  .banner{
+    background:var(--indian);
+    color:var(--bone);
+    padding: clamp(6rem, 12vh, 10rem) clamp(1.5rem,4vw,3rem);
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .banner::before{
+    content:""; position:absolute; left:0; right:0; top:50%;
+    height:1px; background:rgba(246,239,222,.18);
+  }
+  .banner > *{ position:relative; }
+  .banner .small{
+    font-size:.72rem; letter-spacing:.3em; text-transform:uppercase;
+    color:rgba(246,239,222,.65);
+    margin-bottom:1.5rem;
+  }
+  .banner h2{
+    font-size:clamp(2.4rem, 6vw, 5rem);
+    max-width:20ch; margin:0 auto 2.5rem;
+    color:var(--bone);
+  }
+  .banner h2 em{ font-style:italic; font-weight:300; }
+  .banner .btn{ background:var(--bone); color:var(--ink); }
+  .banner .btn:hover{ background:var(--ink); color:var(--bone); }
+  .banner .meta{
+    margin-top:2.5rem;
+    font-family:var(--serif); font-style:italic;
+    color:rgba(246,239,222,.75);
+    font-size:1rem;
+    font-variation-settings:"opsz" 18;
+  }
+
+  /* Footer */
+  footer{
+    background:var(--ink);
+    color:rgba(246,239,222,.7);
+    padding: clamp(4rem, 8vh, 6rem) clamp(1.5rem,4vw,3rem) 2rem;
+  }
+  .foot-inner{
+    max-width:1300px; margin:0 auto;
+    display:grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap:3rem;
+  }
+  @media (max-width: 780px){ .foot-inner{ grid-template-columns: 1fr 1fr; gap:2.5rem; } }
+  @media (max-width: 480px){ .foot-inner{ grid-template-columns: 1fr; } }
+  .foot-brand{
+    font-family:var(--serif);
+    font-size:2.2rem;
+    font-weight:330;
+    color:var(--cream);
+    line-height:1;
+    letter-spacing:-.01em;
+    font-variation-settings:"opsz" 72;
+  }
+  .foot-brand em{ font-style:italic; color:var(--saffron); }
+  .foot-tag{
+    margin-top:1rem;
+    font-family:var(--serif); font-style:italic;
+    font-size:1rem; color:rgba(246,239,222,.55);
+    font-variation-settings:"opsz" 18;
+    max-width:30ch;
+  }
+  .foot-col h4{
+    font-size:.7rem; letter-spacing:.3em; text-transform:uppercase;
+    color:rgba(246,239,222,.5);
+    margin-bottom:1.25rem; font-weight:500;
+  }
+  .foot-col a, .foot-col p{
+    display:block;
+    font-size:.92rem;
+    line-height:2;
+    color:rgba(246,239,222,.78);
+    transition:color .3s var(--ease);
+  }
+  .foot-col a:hover{ color:var(--cream); }
+
+  .foot-rule{
+    border-top:1px solid rgba(246,239,222,.12);
+    margin-top:4rem; padding-top:2rem;
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:1rem;
+    font-size:.7rem; letter-spacing:.28em; text-transform:uppercase;
+    color:rgba(246,239,222,.4);
+  }
+  .socials{ display:flex; gap:1.25rem; }
+  .socials a{
+    width:34px; height:34px;
+    border:1px solid rgba(246,239,222,.2);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transition: background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease);
+  }
+  .socials a:hover{ background:var(--cream); color:var(--ink); border-color:var(--cream); }
+  .socials svg{ width:14px; height:14px; }
+
+  /* Reveal */
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition: opacity 1.1s var(--ease), transform 1.1s var(--ease);
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:.01ms !important;
+      transition-duration:.01ms !important;
+    }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <a href="#" class="brand">The Bedelle<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="#philosophy">The House</a>
+    <a href="#rooms">Suites</a>
+    <a href="#day">A Day Here</a>
+    <a href="#voices">Voices</a>
+  </div>
+  <a href="#book" class="nav-cta">Reserve</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-meta">
+        <span class="line"></span>
+        <span class="eyebrow">Runda · Nairobi · Seven Suites</span>
+      </div>
+      <h1 class="display">
+        <span class="row"><span>A quiet</span></span>
+        <span class="row"><span>address in</span></span>
+        <span class="row"><span><em>Runda.</em></span></span>
+      </h1>
+      <div class="hero-cta-row">
+        <a href="#book" class="btn">
+          Reserve a Suite
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#rooms" class="btn-ghost">See the Suites</a>
+      </div>
+    </div>
+
+    <div class="hero-image" aria-hidden="true">
+      <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <rect width="400" height="500" fill="#e8dcc0"/>
+        <rect x="0" y="400" width="400" height="100" fill="#dccda8"/>
+        <rect x="0" y="470" width="400" height="30" fill="#c8b994"/>
+        <rect x="120" y="120" width="160" height="320" fill="#d4c4a0"/>
+        <path d="M 120 160 Q 200 100 280 160 L 280 120 L 120 120 Z" fill="#d4c4a0"/>
+        <rect x="135" y="155" width="130" height="285" fill="#6a4530"/>
+        <path d="M 135 185 Q 200 140 265 185 L 265 155 L 135 155 Z" fill="#6a4530"/>
+        <line x1="200" y1="160" x2="200" y2="440" stroke="#3a2818" stroke-width="2"/>
+        <rect x="148" y="200" width="44" height="60" fill="none" stroke="#4a3220" stroke-width="1.5"/>
+        <rect x="148" y="270" width="44" height="60" fill="none" stroke="#4a3220" stroke-width="1.5"/>
+        <rect x="148" y="340" width="44" height="60" fill="none" stroke="#4a3220" stroke-width="1.5"/>
+        <rect x="208" y="200" width="44" height="60" fill="none" stroke="#4a3220" stroke-width="1.5"/>
+        <rect x="208" y="270" width="44" height="60" fill="none" stroke="#4a3220" stroke-width="1.5"/>
+        <rect x="208" y="340" width="44" height="60" fill="none" stroke="#4a3220" stroke-width="1.5"/>
+        <circle cx="155" cy="178" r="3" fill="#d4a44a"/>
+        <circle cx="175" cy="166" r="3" fill="#d4a44a"/>
+        <circle cx="200" cy="160" r="3" fill="#d4a44a"/>
+        <circle cx="225" cy="166" r="3" fill="#d4a44a"/>
+        <circle cx="245" cy="178" r="3" fill="#d4a44a"/>
+        <circle cx="200" cy="220" r="2.5" fill="#d4a44a"/>
+        <circle cx="200" cy="260" r="2.5" fill="#d4a44a"/>
+        <circle cx="200" cy="300" r="2.5" fill="#d4a44a"/>
+        <circle cx="200" cy="340" r="2.5" fill="#d4a44a"/>
+        <circle cx="200" cy="380" r="2.5" fill="#d4a44a"/>
+        <circle cx="180" cy="295" r="6" fill="none" stroke="#d4a44a" stroke-width="2"/>
+        <circle cx="220" cy="295" r="6" fill="none" stroke="#d4a44a" stroke-width="2"/>
+        <path d="M 30 80 Q 60 120 90 140" stroke="#3a4a2a" stroke-width="1.5" fill="none"/>
+        <circle cx="40" cy="90" r="6" fill="#c97a5a" opacity=".85"/>
+        <circle cx="55" cy="105" r="5" fill="#c97a5a" opacity=".85"/>
+        <circle cx="72" cy="125" r="5" fill="#c97a5a" opacity=".85"/>
+        <circle cx="85" cy="138" r="4" fill="#c97a5a" opacity=".85"/>
+        <ellipse cx="50" cy="115" rx="3" ry="6" fill="#3a4a2a" transform="rotate(-30 50 115)"/>
+        <ellipse cx="68" cy="135" rx="3" ry="6" fill="#3a4a2a" transform="rotate(-30 68 135)"/>
+      </svg>
+      <div class="caption">
+        <span>The Victorian Facade</span>
+        <span class="num">Plate 01</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-rail">
+    <span>Nairobi · Kenya · 1°S</span>
+    <div class="scroll"><span>Scroll</span><span class="arrow"></span></div>
+    <span>Karibu</span>
+  </div>
+</header>
+
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-inner">
+    <div class="reveal">
+      <div class="section-label"><span class="num">01</span><span>The House</span></div>
+    </div>
+    <div>
+      <h2 class="display reveal">Not a <em>hotel</em>, exactly. More like the home of friends who happen to <em>cook beautifully.</em></h2>
+      <p class="lede reveal">The Bedelle is a Victorian-style house in Runda — Nairobi's most discreet suburb — turned, with care, into seven suites and a garden you will not want to leave.</p>
+      <p class="lede reveal" style="color:var(--ink-soft); margin-top:1.5rem;">There is no lobby, no marble check-in, no queue. There is a gate, a long drive, a swimming pool that catches the afternoon, and a kitchen that does not stop. The wifi is fast. We mention this so you can stop thinking about it.</p>
+      <div class="signature reveal">Kambua &amp; Robert, Hosts</div>
+    </div>
+  </div>
+</section>
+
+<section class="rooms" id="rooms">
+  <div class="rooms-head">
+    <div>
+      <div class="section-label reveal"><span class="num">02</span><span>The Suites</span></div>
+      <h2 class="display reveal" style="margin-top:2rem;">Seven suites. <em>One feeling</em> across all of them.</h2>
+    </div>
+    <p class="lede reveal">From superior to presidential. Every suite is ensuite, air-conditioned, fitted with a plasma screen, work desk, and a stocked bar you don't have to feel guilty about opening. Soft beds. Big windows. Garden on the other side.</p>
+  </div>
+
+  <div class="rooms-grid">
+
+    <article class="room-card reveal">
+      <div class="frame">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="500" fill="#f1e8d4"/>
+          <rect x="0" y="280" width="400" height="220" fill="#4f7c7a"/>
+          <rect x="0" y="380" width="400" height="120" fill="#3a6664"/>
+          <rect x="40" y="60" width="320" height="380" fill="#f1e8d4"/>
+          <path d="M 90 130 Q 200 60 310 130 L 310 380 L 90 380 Z" fill="#4f7c7a"/>
+          <rect x="90" y="280" width="220" height="100" fill="#3a6664"/>
+          <path d="M 170 250 L 175 290 L 200 290 Z" fill="#f1e8d4"/>
+          <path d="M 175 290 L 210 290 L 205 295 L 178 295 Z" fill="#6a4530"/>
+          <path d="M 90 130 Q 100 250 110 380 L 130 380 Q 120 250 105 130 Z" fill="#f6efde" opacity=".85"/>
+          <path d="M 310 130 Q 300 250 290 380 L 270 380 Q 280 250 295 130 Z" fill="#f6efde" opacity=".85"/>
+          <rect x="0" y="430" width="400" height="70" fill="#6a4530"/>
+          <rect x="0" y="430" width="400" height="8" fill="#4a3220"/>
+          <rect x="80" y="442" width="240" height="20" fill="#d4a44a"/>
+        </svg>
+      </div>
+      <div class="room-meta">
+        <h3 class="room-title">Superior, <em>the calm</em></h3>
+        <span class="room-tag">N° 01</span>
+      </div>
+      <p class="room-cap">A double bed, a deep tub, a window that opens onto green.</p>
+    </article>
+
+    <article class="room-card reveal">
+      <div class="frame">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="500" fill="#c97a5a"/>
+          <rect x="0" y="380" width="400" height="120" fill="#b56a4d"/>
+          <path d="M 100 160 Q 200 80 300 160 L 300 420 L 100 420 Z" fill="#e8dcc0"/>
+          <rect x="100" y="380" width="200" height="40" fill="#c8b994"/>
+          <rect x="195" y="280" width="10" height="100" fill="#6a4530"/>
+          <circle cx="180" cy="260" r="35" fill="#3a4a2a"/>
+          <circle cx="215" cy="255" r="38" fill="#3a4a2a"/>
+          <circle cx="200" cy="235" r="32" fill="#3a4a2a"/>
+          <circle cx="170" cy="250" r="4" fill="#f6efde"/>
+          <circle cx="210" cy="240" r="4" fill="#f6efde"/>
+          <circle cx="225" cy="265" r="4" fill="#f6efde"/>
+          <circle cx="185" cy="275" r="4" fill="#f6efde"/>
+          <rect x="60" y="430" width="60" height="10" fill="#6a4530"/>
+          <rect x="65" y="440" width="6" height="40" fill="#6a4530"/>
+          <rect x="110" y="440" width="6" height="40" fill="#6a4530"/>
+          <ellipse cx="160" cy="445" rx="22" ry="8" fill="#4a3220"/>
+          <path d="M 138 445 Q 138 415 160 415 Q 182 415 182 445 Z" fill="#6a4530"/>
+        </svg>
+      </div>
+      <div class="room-meta">
+        <h3 class="room-title">Deluxe, <em>the garden</em></h3>
+        <span class="room-tag">N° 02</span>
+      </div>
+      <p class="room-cap">Steps from the lawn. Coffee on the veranda before the city wakes up.</p>
+    </article>
+
+    <article class="room-card reveal">
+      <div class="frame">
+        <svg viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <rect width="400" height="500" fill="#3a6664"/>
+          <rect x="0" y="400" width="400" height="100" fill="#2a4a48"/>
+          <rect x="160" y="80" width="80" height="280" fill="#1a2a30"/>
+          <circle cx="200" cy="170" r="28" fill="#f1e8d4"/>
+          <circle cx="208" cy="165" r="28" fill="#3a6664" opacity=".15"/>
+          <line x1="200" y1="80" x2="200" y2="360" stroke="#6a4530" stroke-width="2"/>
+          <line x1="160" y1="220" x2="240" y2="220" stroke="#6a4530" stroke-width="2"/>
+          <rect x="160" y="80" width="80" height="280" fill="none" stroke="#6a4530" stroke-width="3"/>
+          <rect x="40" y="380" width="320" height="120" fill="#f1e8d4"/>
+          <rect x="70" y="395" width="80" height="35" fill="#f6efde"/>
+          <rect x="250" y="395" width="80" height="35" fill="#f6efde"/>
+          <rect x="70" y="395" width="80" height="35" fill="none" stroke="#c8b994" stroke-width="1"/>
+          <rect x="250" y="395" width="80" height="35" fill="none" stroke="#c8b994" stroke-width="1"/>
+          <rect x="100" y="445" width="200" height="20" fill="#c97a5a"/>
+          <path d="M 200 60 L 50 380" stroke="#f6efde" stroke-width="1" opacity=".4"/>
+          <path d="M 200 60 L 350 380" stroke="#f6efde" stroke-width="1" opacity=".4"/>
+        </svg>
+      </div>
+      <div class="room-meta">
+        <h3 class="room-title">Presidential, <em>the perch</em></h3>
+        <span class="room-tag">N° 03</span>
+      </div>
+      <p class="room-cap">The corner suite, with a balcony over the lawn. Honeymoons happen here.</p>
+    </article>
+
+  </div>
+</section>
+
+<section class="process" id="day">
+  <div class="process-head">
+    <div class="section-label reveal"><span class="num">03</span><span>A Day Here</span></div>
+    <h2 class="display reveal">Four <em>unhurried</em> hours.</h2>
+  </div>
+  <div class="process-grid">
+    <div class="step reveal">
+      <span class="dot"></span>
+      <div class="num">i.</div>
+      <h3>Morning</h3>
+      <p>Breakfast on the terrace — full English, Continental, or simply the guacamole the long-stay guests rave about. Coffee, juice, the morning paper. The garden does the rest.</p>
+    </div>
+    <div class="step reveal">
+      <span class="dot"></span>
+      <div class="num">ii.</div>
+      <h3>Midday</h3>
+      <p>The pool is at its bluest around noon. Lunch is set under the trees, or by the water if the sun is kind. The menu changes daily — the chef does not believe in repetition.</p>
+    </div>
+    <div class="step reveal">
+      <span class="dot"></span>
+      <div class="num">iii.</div>
+      <h3>Afternoon</h3>
+      <p>A walk in Karura Forest, fifteen minutes away. Or shopping at Village Market. Or Two Rivers, if you must. Or, very reasonably, nothing at all.</p>
+    </div>
+    <div class="step reveal">
+      <span class="dot"></span>
+      <div class="num">iv.</div>
+      <h3>Evening</h3>
+      <p>Dinner is candlelit, indoors or on the terrace. The wine list is genuinely long. A nightcap by the pool. The neighborhood is quiet by ten — by design.</p>
+    </div>
+  </div>
+</section>
+
+<section class="voices" id="voices">
+  <div class="voices-inner">
+    <div class="voices-head reveal">
+      <div class="section-label"><span class="num">04</span><span>From the Guest Book</span></div>
+      <h2 class="display" style="margin-top:1.5rem; font-size: clamp(2rem, 4.2vw, 3.4rem);">Voices from <em>the house.</em></h2>
+    </div>
+    <div class="voices-grid">
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <blockquote>The menu changes every day. The wine list is unreasonably good. If the chefs here ever made it to a Michelin inspector, things would <em>get loud.</em></blockquote>
+        <div class="by"><span class="line"></span><strong>Shaga P.</strong><span>Sandnes, Norway</span></div>
+      </div>
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <blockquote>You don't really feel like you're in a hotel room. It's more like a cozy, well-decorated <em>bedroom</em> in a friend's beautiful house — which, increasingly, is the whole point.</blockquote>
+        <div class="by"><span class="line"></span><strong>Marion W.</strong><span>Nairobi</span></div>
+      </div>
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <blockquote>It is more home than hotel. The atmosphere is peaceful, the staff are kind, and I took an embarrassing <em>amount</em> of photos before I'd even unpacked.</blockquote>
+        <div class="by"><span class="line"></span><strong>A Guest</strong><span>after a 15-day safari</span></div>
+      </div>
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <blockquote>Four nights with my partner, every minute of it good. Quiet setting, kind staff, food worth the flight. Don't skip the <em>guacamole</em> at breakfast.</blockquote>
+        <div class="by"><span class="line"></span><strong>Mátyás J.</strong><span>Budapest</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="banner" id="book">
+  <div class="small reveal">Open year-round · Seven suites · From $99 per night</div>
+  <h2 class="display reveal">The gate is, <em>already,</em> open.</h2>
+  <a href="mailto:reservations@thebedelle.com" class="btn reveal">
+    Reserve a Suite
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  <div class="meta reveal">or call us — +254 721 242 711 · we pick up</div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div>
+      <div class="foot-brand">The <em>Bedelle</em></div>
+      <p class="foot-tag">A Victorian house in Runda. Seven suites. A garden, a pool, a kitchen people remember.</p>
+    </div>
+    <div class="foot-col">
+      <h4>The House</h4>
+      <a href="#philosophy">Our Story</a>
+      <a href="#rooms">The Suites</a>
+      <a href="#day">A Day Here</a>
+      <a href="#voices">Guest Voices</a>
+    </div>
+    <div class="foot-col">
+      <h4>Find Us</h4>
+      <p>No 551 Runda Crescent</p>
+      <p>Nairobi 00400, Kenya</p>
+      <p>25 min from JKIA · 20 min from Wilson</p>
+    </div>
+    <div class="foot-col">
+      <h4>Write to Us</h4>
+      <a href="mailto:reservations@thebedelle.com">reservations@thebedelle.com</a>
+      <a href="tel:+254721242711">+254 721 242 711</a>
+      <a href="tel:+254718179967">+254 718 179 967</a>
+    </div>
+  </div>
+
+  <div class="foot-rule">
+    <span>© MMXXVI · The Bedelle</span>
+    <div class="socials">
+      <a href="#" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></svg>
+      </a>
+      <a href="#" aria-label="Journal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h13a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3V4zM4 17h13"/></svg>
+      </a>
+      <a href="#" aria-label="Pinterest">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M11 7c2 0 4 1 4 4s-1 4-3 4-2-2-2-2m0 0L9 19m1-9 1-5"/></svg>
+      </a>
+    </div>
+    <span>Karibu sana · Welcome</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 40);
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
